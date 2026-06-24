@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Адвент для Варюши</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <section class="scene">
+      <div class="glow one"></div>
+      <div class="glow two"></div>
+      <div class="glow three"></div>
+
+      <div class="constellation">
+        <i class="star one"></i>
+        <i class="star two"></i>
+        <i class="star three"></i>
+      </div>
+
+      <div class="moon">
+        <div>
+          <span>🜏</span>
+          <small>июль</small>
+        </div>
+      </div>
+
+      <header class="intro">
+        <h1 class="title">Адвент</h1>
+        <p class="subtitle">✦ для любимой Варюши ✦</p>
+        <div class="progress" id="progress">
+          ✦ 0 открыто · 0 ждут · 31 спят
+        </div>
+        <p class="note">
+          Каждый день — новая тьма. Каждая дверь скрывает нечто.
+        </p>
+      </header>
+
+      <section class="map">
+        <svg class="cobweb" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <line x1="100" y1="0" x2="0" y2="100" stroke="#c9a84c" stroke-width="0.5"/>
+          <line x1="100" y1="0" x2="30" y2="100" stroke="#c9a84c" stroke-width="0.5"/>
+          <line x1="100" y1="0" x2="60" y2="100" stroke="#c9a84c" stroke-width="0.5"/>
+          <line x1="100" y1="0" x2="0" y2="60" stroke="#c9a84c" stroke-width="0.5"/>
+          <line x1="100" y1="0" x2="0" y2="30" stroke="#c9a84c" stroke-width="0.5"/>
+          <ellipse cx="100" cy="0" rx="30" ry="30" stroke="#c9a84c" stroke-width="0.5" fill="none"/>
+          <ellipse cx="100" cy="0" rx="55" ry="55" stroke="#c9a84c" stroke-width="0.4" fill="none"/>
+          <ellipse cx="100" cy="0" rx="80" ry="80" stroke="#c9a84c" stroke-width="0.3" fill="none"/>
+        </svg>
+
+        <div class="route one"></div>
+        <div class="route two"></div>
+
+        <div class="map-head">
+          <p class="map-title">✦ Книга дней · Июль 2026 ✦</p>
+        </div>
+
+        <div class="rune-line">ᚠ ᚢ ᚦ ᚨ ᚱ ᚲ ᚷ ᚹ ᚺ ᚾ</div>
+
+        <div class="legend">
+          <div class="legend-item"><i class="dot crimson"></i> открыто</div>
+          <div class="legend-item"><i class="dot gold"></i> можно открыть</div>
+          <div class="legend-item"><i class="dot gray"></i> скоро</div>
+        </div>
+
+        <div class="grid" id="grid">
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <button class="modal-close" id="modalClose">✕</button>
+      <div class="modal-image" id="modalImage"></div>
+      <div class="modal-content">
+        <p class="modal-kicker" id="modalKicker">✦ ВРАТА 09 · ОТКРЫТЫ</p>
+        <h2 id="modalTitle">День 9 июля</h2>
+        <p id="modalText">Текст сообщения...</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
