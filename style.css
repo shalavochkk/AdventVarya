@@ -569,3 +569,32 @@ body {
   .island .state span { font-size: 6px; }
   .island .icon       { width: 16px; height: 16px; font-size: 8px; }
 }
+
+.island.heating {
+  animation: day4Heat 15s linear forwards;
+}
+
+@keyframes day4Heat {
+  0% {
+    background: rgba(20, 10, 8, 0.75);
+    box-shadow: 0 0 0 rgba(255, 0, 0, 0);
+  }
+  25% {
+    background: #3a0a0f;
+  }
+  50% {
+    background: #7a111d;
+  }
+  75% {
+    background: #b41a2e;
+  }
+  100% {
+    background: #c30022;
+    box-shadow: 0 0 30px rgba(255, 0, 0, 0.75);
+  }
+}
+
+.island.red {
+  background: #ff002b28 !important;
+  box-shadow: 0 0 70px rgba(255, 0, 0, 0.20);
+}

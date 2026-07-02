@@ -1,19 +1,21 @@
 const CONFIG = {
   year: 2026,
   month: 6,
-  days: 31,
+  days: 32,
   name: 'Варюши'
 };
 
 const adventData = {};
+const DAY4_AUDIO_ID = 'day4-audio';
 
 function generateAdventData() {
   const { year, month, days } = CONFIG;
-  
+
   const messages = [
+    'Был ошибкой, стал бонусом. Ты мое солнышко блин!!!',
     'Первый день июля. А я люблю тебя до ужаса сильно',
-    'День второй. Я очень рад что ты открыла его',
-    'Третий. Каждый момент что мы провели, я храню в сердце.',
+    'День второй. Каждый момент что мы провели, я храню в сердце.',
+    'Третий. Ой, правда думала что просто картинки? не посчитай манипуляцией, напиши что любишь меня мяу, я умру от милостей пхпхп',
     'Четвёртый. Твой котик тебя любит!!!',
     'Пятый. Люблю тебя пиздец, надеюсь у тебя все хорошо',
     'Шестой день, а я люблю тебя безгранично сильно',
@@ -45,6 +47,7 @@ function generateAdventData() {
   ];
 
   const images = [
+    'https://i.pinimg.com/736x/6d/4b/66/6d4b660f27ee4aa407390833a812f81b.jpg',
     'https://i.pinimg.com/736x/b1/e9/f4/b1e9f460e1a1eaea59dcec420db26515.jpg',
     'https://i.pinimg.com/736x/01/1b/ec/011beccb74e0b67ccdec111d223e7d1b.jpg',
     'https://i.pinimg.com/736x/f5/0a/77/f50a77e1d341a50296be8b850e309cfe.jpg',
@@ -82,7 +85,7 @@ function generateAdventData() {
     const dateObj = new Date(year, month, d);
     const dateStr = dateObj.toISOString().split('T')[0];
     adventData[dateStr] = {
-      image: images[(d - 1) % images.length], // 1→0, 2→1, 3→2, 4→3, 5→0 в рот ебательская система индексации
+      image: images[(d - 1) % images.length],
       text: messages[(d - 1) % messages.length]
     };
   }
@@ -96,19 +99,6 @@ function getToday() {
 
 function getDateKey(date) {
   return date.toISOString().split('T')[0];
-}
-
-function getDayStatus(dateStr) {
-  const today = getToday();
-  const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  const cellDate = new Date(dateStr);
-  const cellClean = new Date(cellDate.getFullYear(), cellDate.getMonth(), cellDate.getDate());
-
-  const opened = getOpenedDays().includes(dateStr);
-  if (opened) return 'opened';
-  if (cellClean > todayClean) return 'locked';
-  if (cellClean <= todayClean) return 'available';
-  return 'locked';
 }
 
 function getOpenedDays() {
@@ -128,11 +118,43 @@ function saveOpenedDay(dateStr) {
   }
 }
 
+function getDayStatus(dateStr) {
+  const today = getToday();
+  const todayClean = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+  const cellDate = new Date(dateStr);
+  const cellClean = new Date(cellDate.getFullYear(), cellDate.getMonth(), cellDate.getDate());
+
+  const opened = getOpenedDays().includes(dateStr);
+  if (opened) return 'opened';
+  if (cellClean > todayClean) return 'locked';
+  return 'available';
+}
+
+function getDay4Audio() {
+  return document.getElementById(DAY4_AUDIO_ID);
+}
+
+function startDay4Effect(card) {
+  if (!card) return;
+
+  card.classList.add('red');
+
+  const audio = getDay4Audio();
+  if (audio) {
+    try {
+      audio.currentTime = 0;
+      const p = audio.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    } catch {}
+  }
+}
+
 function renderGrid() {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
   const { year, month, days } = CONFIG;
+  const day4DateStr = new Date(2026, 6, 4).toISOString().split('T')[0];
 
   for (let d = 1; d <= days; d++) {
     const dateObj = new Date(year, month, d);
@@ -141,11 +163,14 @@ function renderGrid() {
     const data = adventData[dateStr];
     const opened = status === 'opened';
     const available = status === 'available';
-    const locked = status === 'locked';
 
     const island = document.createElement('div');
     island.className = `island ${status}`;
     island.dataset.date = dateStr;
+
+    if (dateStr === day4DateStr && (opened || localStorage.getItem('advent_varya2_day4_red') === 'true')) {
+      island.classList.add('red');
+    }
 
     if (opened && data) {
       const preview = document.createElement('div');
@@ -175,9 +200,7 @@ function renderGrid() {
     island.appendChild(state);
 
     island.style.animationDelay = `${d * 0.025}s`;
-
     island.addEventListener('click', () => handleDayClick(dateStr));
-
     grid.appendChild(island);
   }
 
@@ -196,6 +219,7 @@ function updateProgress() {
 
 function handleDayClick(dateStr) {
   const status = getDayStatus(dateStr);
+  const day4DateStr = new Date(2026, 6, 4).toISOString().split('T')[0];
 
   if (status === 'locked') {
     const target = document.querySelector(`.island[data-date="${dateStr}"]`);
@@ -208,13 +232,28 @@ function handleDayClick(dateStr) {
 
   if (status === 'available') {
     saveOpenedDay(dateStr);
+    if (dateStr === day4DateStr) {
+      localStorage.setItem('advent_varya2_day4_red', 'true');
+    }
     renderGrid();
     openModal(dateStr);
+
+    if (dateStr === day4DateStr) {
+      const card = document.querySelector(`.island[data-date="${dateStr}"]`);
+      if (card) startDay4Effect(card);
+      renderGrid();
+    }
+
     return;
   }
 
   if (status === 'opened') {
     openModal(dateStr);
+
+    if (dateStr === day4DateStr) {
+      const card = document.querySelector(`.island[data-date="${dateStr}"]`);
+      if (card) startDay4Effect(card);
+    }
   }
 }
 
@@ -244,6 +283,12 @@ function openModal(dateStr) {
 function closeModal() {
   overlay.classList.remove('active');
   document.body.style.overflow = '';
+
+  const audio = document.getElementById('day4-audio');
+  if (audio) {
+    audio.pause();
+    audio.currentTime = 0;
+  }
 }
 
 modalClose.addEventListener('click', closeModal);
@@ -255,4 +300,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 document.addEventListener('DOMContentLoaded', renderGrid);
+
 console.log(`✦ Адвент для ${CONFIG.name} загружен (${CONFIG.month + 1}/${CONFIG.year})`);
