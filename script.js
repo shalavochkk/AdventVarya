@@ -7,6 +7,7 @@ const CONFIG = {
 
 const adventData = {};
 const DAY4_AUDIO_ID = 'day4-audio';
+const DAY9_AUDIO_ID = 'day9-audio';
 
 function generateAdventData() {
   const { year, month, days } = CONFIG;
@@ -20,7 +21,7 @@ function generateAdventData() {
     'Пятый день твоего адвент календарика, я правда очень ценю тебя, ты очень важна для меня, а еще я очень жду когда смогу обнять тебя и не отпускать, воздушни поцелуйчик вылетел к тебе!!!!',
     'Шестой день, а я люблю тебя безгранично сильно',
     'Седьмой. МЫ ПОЖЕНИМСЯ!!!',
-    'День восемь, а я так хочу тебя обнять',
+    'День восемь, последнии дни ты грустни... мне плохо от того что я не могу сделать тебя веселей, поднять настроение.. прости',
     'Девятый. ты меня все еще любишь? напиши...',
     'Вроде день десятый, а ты так-то сто из десяти!',
     'Одиннадцатый. Ты лечишь мою грусть кстати',
@@ -55,7 +56,7 @@ function generateAdventData() {
     'https://media1.tenor.com/m/ukBByoKUNFEAAAAC/cuddle-anime.gif',
     'https://i.pinimg.com/736x/91/ab/b9/91abb9cf40258e38c131c14b6d4daa61.jpg',
     'https://i.pinimg.com/736x/0e/69/e9/0e69e94e2831e662be761b54eb7aaed8.jpg',
-    'https://i.pinimg.com/736x/51/1c/39/511c3972bb946b61c77192f30083ea22.jpg',
+    'imsadohblin.png',
     'https://i.pinimg.com/736x/f3/5e/75/f35e75382882924521c064b439492e75.jpg',
     'https://i.pinimg.com/736x/5f/76/9e/5f769e6bcb024aceaa59f600b4342bb3.jpg',
     'https://i.pinimg.com/736x/64/4a/b5/644ab5daef38066a9de5f572b63c519c.jpg',
@@ -134,12 +135,15 @@ function getDay4Audio() {
   return document.getElementById(DAY4_AUDIO_ID);
 }
 
-function startDay4Effect(card) {
+function getDay9Audio() {
+  return document.getElementById(DAY9_AUDIO_ID);
+}
+
+function startAudioEffect(card, audio) {
   if (!card) return;
 
   card.classList.add('red');
 
-  const audio = getDay4Audio();
   if (audio) {
     try {
       audio.currentTime = 0;
@@ -149,12 +153,21 @@ function startDay4Effect(card) {
   }
 }
 
+function startDay4Effect(card) {
+  startAudioEffect(card, getDay4Audio());
+}
+
+function startDay9Effect(card) {
+  startAudioEffect(card, getDay9Audio());
+}
+
 function renderGrid() {
   const grid = document.getElementById('grid');
   grid.innerHTML = '';
 
   const { year, month, days } = CONFIG;
   const day4DateStr = new Date(2026, 6, 4).toISOString().split('T')[0];
+  const day9DateStr = new Date(2026, 6, 9).toISOString().split('T')[0];
 
   for (let d = 1; d <= days; d++) {
     const dateObj = new Date(year, month, d);
@@ -169,6 +182,10 @@ function renderGrid() {
     island.dataset.date = dateStr;
 
     if (dateStr === day4DateStr && (opened || localStorage.getItem('advent_varya2_day4_red') === 'true')) {
+      island.classList.add('red');
+    }
+
+    if (dateStr === day9DateStr && (opened || localStorage.getItem('advent_varya2_day9_red') === 'true')) {
       island.classList.add('red');
     }
 
@@ -220,6 +237,7 @@ function updateProgress() {
 function handleDayClick(dateStr) {
   const status = getDayStatus(dateStr);
   const day4DateStr = new Date(2026, 6, 4).toISOString().split('T')[0];
+  const day9DateStr = new Date(2026, 6, 9).toISOString().split('T')[0];
 
   if (status === 'locked') {
     const target = document.querySelector(`.island[data-date="${dateStr}"]`);
@@ -235,12 +253,21 @@ function handleDayClick(dateStr) {
     if (dateStr === day4DateStr) {
       localStorage.setItem('advent_varya2_day4_red', 'true');
     }
+    if (dateStr === day9DateStr) {
+      localStorage.setItem('advent_varya2_day9_red', 'true');
+    }
     renderGrid();
     openModal(dateStr);
 
     if (dateStr === day4DateStr) {
       const card = document.querySelector(`.island[data-date="${dateStr}"]`);
       if (card) startDay4Effect(card);
+      renderGrid();
+    }
+
+    if (dateStr === day9DateStr) {
+      const card = document.querySelector(`.island[data-date="${dateStr}"]`);
+      if (card) startDay9Effect(card);
       renderGrid();
     }
 
@@ -253,6 +280,11 @@ function handleDayClick(dateStr) {
     if (dateStr === day4DateStr) {
       const card = document.querySelector(`.island[data-date="${dateStr}"]`);
       if (card) startDay4Effect(card);
+    }
+
+    if (dateStr === day9DateStr) {
+      const card = document.querySelector(`.island[data-date="${dateStr}"]`);
+      if (card) startDay9Effect(card);
     }
   }
 }
@@ -284,10 +316,16 @@ function closeModal() {
   overlay.classList.remove('active');
   document.body.style.overflow = '';
 
-  const audio = document.getElementById('day4-audio');
-  if (audio) {
-    audio.pause();
-    audio.currentTime = 0;
+  const day4Audio = document.getElementById('day4-audio');
+  if (day4Audio) {
+    day4Audio.pause();
+    day4Audio.currentTime = 0;
+  }
+
+  const day9Audio = document.getElementById('day9-audio');
+  if (day9Audio) {
+    day9Audio.pause();
+    day9Audio.currentTime = 0;
   }
 }
 
