@@ -1,0 +1,235 @@
+::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: transparent; }
+* { scrollbar-width: none; -ms-overflow-style: none; }
+
+@keyframes ghostShift {
+0% { opacity: 0; }
+100% { opacity: 1; }
+}
+@keyframes hardInvert {
+0%, 92% { opacity: 0; }
+93%, 96% { opacity: 1; }
+97%, 100% { opacity: 0; }
+}
+@keyframes scanlineMove {
+0% { transform: translateY(0); }
+100% { transform: translateY(6px); }
+}
+@keyframes noiseShift {
+0% { transform: translate(0, 0) scale(1); }
+25% { transform: translate(-1px, 0.5px) scale(1.01); }
+50% { transform: translate(1px, -0.5px) scale(0.99); }
+75% { transform: translate(-0.5px, 1px) scale(1.005); }
+100% { transform: translate(0.5px, -1px) scale(0.995); }
+}
+@keyframes hardStripGlitch {
+0% { transform: translateX(0); opacity: 0; }
+10% { transform: translateX(-14px); opacity: 1; }
+20% { transform: translateX(10px); opacity: 0.8; }
+30% { transform: translateX(-6px); opacity: 0; }
+100% { transform: translateX(0); opacity: 0; }
+}
+@keyframes hardStripGlitchV {
+0% { transform: translateY(0); opacity: 0; }
+15% { transform: translateY(-10px); opacity: 1; }
+30% { transform: translateY(8px); opacity: 0.7; }
+45% { transform: translateY(0); opacity: 0; }
+100% { transform: translateY(0); opacity: 0; }
+}
+@keyframes cornerGlitchHard {
+0% { opacity: 0; transform: scale(1); }
+20% { opacity: 1; transform: scale(1.5); }
+40% { opacity: 0; transform: scale(0.7); }
+100% { opacity: 0; transform: scale(1); }
+}
+.modal.glitching {
+animation: modalGlitchSubtle 0.3s steps(2) infinite;
+transition: none;
+}
+@keyframes modalGlitchSubtle {
+0% { transform: translate(0, 0); }
+50% { transform: translate(1px, -1px); }
+100% { transform: translate(-1px, 1px); }
+}
+.modal.glitching .modal-image {
+animation: imageGlitchHard 0.18s steps(2) infinite;
+}
+@keyframes imageGlitchHard {
+0% { transform: translate(0,0); filter: none; }
+25% { transform: translate(-2px, 1px); filter: invert(1) grayscale(1); }
+50% { transform: translate(2px, -1px); filter: grayscale(1) brightness(1.4); }
+75% { transform: translate(-1px, 2px); filter: grayscale(1) brightness(0.6); }
+100% { transform: translate(0,0); filter: none; }
+}
+.modal.glitching h2,
+.modal.glitching .modal-content p,
+.modal.glitching .modal-kicker {
+animation: textGlitchHard 0.15s steps(2) infinite;
+}
+@keyframes textGlitchHard {
+0% { transform: translate(0); text-shadow: none; }
+50% { transform: translate(-2px, 1px); text-shadow: 2px 0 rgba(0,0,0,0.4), -2px 0 rgba(255,255,255,0.3); }
+100% { transform: translate(2px, -1px); text-shadow: -2px 0 rgba(0,0,0,0.4), 2px 0 rgba(255,255,255,0.3); }
+}
+.modal.glitching::before,
+.modal.glitching::after {
+animation: borderGlitchHard 0.25s steps(2) infinite;
+}
+@keyframes borderGlitchHard {
+0% { opacity: 1; transform: translate(0); }
+50% { opacity: 0.4; transform: translate(2px, -2px); }
+100% { opacity: 1; transform: translate(-2px, 2px); }
+}
+.modal.glitching .modal-close {
+animation: closeGlitchHard 0.3s steps(2) infinite;
+}
+@keyframes closeGlitchHard {
+0% { transform: rotate(0deg) scale(1); }
+50% { transform: rotate(3deg) scale(1.05); }
+100% { transform: rotate(-3deg) scale(0.95); }
+}
+
+/* ===== АДСКИЙ ЭФФЕКТ ДЛЯ 11-ГО ДНЯ — плавно, сочно, с лёгкой дрожью ===== */
+.modal.hellfire {
+border-color: rgba(255, 70, 0, 0.75) !important;
+background: linear-gradient(145deg, rgba(20, 5, 5, 0.98), rgba(10, 2, 2, 0.99)) !important;
+animation: hellBreatheShake 4.5s ease-in-out infinite, hellPulse 3s ease-in-out infinite !important;
+box-shadow:
+0 40px 100px rgba(0, 0, 0, 0.95),
+0 0 100px rgba(255, 60, 0, 0.4),
+0 0 200px rgba(255, 30, 0, 0.2),
+inset 0 0 80px rgba(139, 0, 0, 0.3) !important;
+transform-origin: center center;
+transition: box-shadow 0.6s ease;
+}
+
+/* Лёгкая, плавная дрожь вместо резкого тряса — как будто модалка дышит и слегка вибрирует */
+@keyframes hellBreatheShake {
+0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
+20% { transform: translate(-0.6px, 0.4px) rotate(-0.08deg) scale(1.0015); }
+40% { transform: translate(0.5px, -0.5px) rotate(0.06deg) scale(0.9992); }
+60% { transform: translate(-0.4px, -0.3px) rotate(-0.05deg) scale(1.001); }
+80% { transform: translate(0.6px, 0.4px) rotate(0.07deg) scale(0.9995); }
+}
+
+@keyframes hellPulse {
+0%, 100% { box-shadow: 0 40px 100px rgba(0, 0, 0, 0.95), 0 0 100px rgba(255, 60, 0, 0.35), 0 0 200px rgba(255, 30, 0, 0.18), inset 0 0 80px rgba(139, 0, 0, 0.28); }
+50% { box-shadow: 0 40px 100px rgba(0, 0, 0, 0.95), 0 0 150px rgba(255, 80, 0, 0.5), 0 0 280px rgba(255, 50, 0, 0.25), inset 0 0 110px rgba(194, 30, 58, 0.35); }
+}
+
+@keyframes hellGlowPulse {
+0%, 100% { opacity: 0.5; transform: scale(1); }
+50% { opacity: 0.85; transform: scale(1.04); }
+}
+
+/* Руны плавно дрейфуют по мягкой дуге вверх, без рывков и внезапных поворотов */
+@keyframes hellRuneDrift {
+0% { transform: translate(0, 0) rotate(0deg) scale(0.85); opacity: 0; }
+12% { opacity: 1; }
+50% { transform: translate(14px, -60px) rotate(12deg) scale(1.05); opacity: 0.9; }
+88% { opacity: 0.4; }
+100% { transform: translate(-10px, -130px) rotate(-8deg) scale(0.9); opacity: 0; }
+}
+
+/* Угли поднимаются плавной синусоидой (drift задаётся инлайново через CSS-переменную) */
+@keyframes hellEmberRise {
+0% { transform: translate(0, 0) scale(0.6); opacity: 0; }
+10% { opacity: 1; }
+50% { transform: translate(calc(var(--drift, 0px) * 0.5), -160px) scale(1); opacity: 0.85; }
+100% { transform: translate(var(--drift, 0px), -340px) scale(0.15); opacity: 0; }
+}
+
+/* Мягкая, редкая зарница вместо стробоскопической вспышки */
+@keyframes hellFlashSoft {
+0% { opacity: 0; }
+25% { opacity: 1; }
+70% { opacity: 0.4; }
+100% { opacity: 0; }
+}
+
+/* Столбы света дышат медленно, будто раздуваемые ветром, а не мигают */
+@keyframes hellPillarBreathe {
+0%, 100% { opacity: 0.25; transform: scaleY(1) scaleX(1); }
+50% { opacity: 0.6; transform: scaleY(1.06) scaleX(1.15); }
+}
+
+.modal.hellfire .modal-kicker {
+color: #ff6a2b !important;
+text-shadow: 0 0 30px rgba(255, 60, 0, 0.9), 0 0 60px rgba(255, 30, 0, 0.5), 0 0 100px rgba(255, 0, 0, 0.3) !important;
+font-size: 14px !important;
+}
+
+.modal.hellfire h2 {
+background: linear-gradient(180deg, #ff8a4d 0%, #ff5a1f 25%, #cc2200 50%, #ff5a1f 75%, #ff8a4d 100%) !important;
+-webkit-background-clip: text !important;
+background-clip: text !important;
+color: transparent !important;
+filter: drop-shadow(0 0 40px rgba(255, 60, 0, 0.6)) drop-shadow(0 0 80px rgba(255, 30, 0, 0.3)) !important;
+animation: hellTextGlow 2.4s ease-in-out infinite !important;
+font-size: clamp(28px, 4vw, 38px) !important;
+transition: filter 0.4s ease;
+}
+
+@keyframes hellTextGlow {
+0%, 100% { filter: drop-shadow(0 0 40px rgba(255, 60, 0, 0.55)) drop-shadow(0 0 80px rgba(255, 30, 0, 0.28)); }
+50% { filter: drop-shadow(0 0 55px rgba(255, 100, 0, 0.75)) drop-shadow(0 0 110px rgba(255, 50, 0, 0.4)); }
+}
+
+.modal.hellfire .modal-content p {
+color: rgba(255, 210, 190, 0.95) !important;
+text-shadow: 0 0 20px rgba(255, 60, 0, 0.3), 0 0 40px rgba(255, 30, 0, 0.1) !important;
+font-size: 17px !important;
+line-height: 1.8 !important;
+}
+
+.modal.hellfire .modal-image {
+filter: saturate(1.5) hue-rotate(-25deg) contrast(1.12) brightness(0.88) !important;
+animation: hellImageBreathe 3s ease-in-out infinite !important;
+border: 2px solid rgba(255, 60, 0, 0.4) !important;
+box-shadow: 0 8px 40px rgba(0, 0, 0, 0.9), inset 0 0 80px rgba(255, 60, 0, 0.28), 0 0 60px rgba(255, 60, 0, 0.14) !important;
+transition: box-shadow 0.5s ease;
+}
+
+@keyframes hellImageBreathe {
+0%, 100% { opacity: 0.88; transform: scale(1); filter: saturate(1.5) hue-rotate(-25deg) contrast(1.12) brightness(0.88); }
+50% { opacity: 1; transform: scale(1.008); filter: saturate(1.65) hue-rotate(-22deg) contrast(1.16) brightness(0.94); }
+}
+
+.modal.hellfire .modal-close {
+border-color: rgba(255, 60, 0, 0.5) !important;
+color: #ff6a2b !important;
+font-size: 22px !important;
+width: 40px !important;
+height: 40px !important;
+}
+.modal.hellfire .modal-close:hover {
+background: rgba(255, 60, 0, 0.25) !important;
+border-color: #ff6a2b !important;
+box-shadow: 0 0 50px rgba(255, 60, 0, 0.4) !important;
+transform: rotate(90deg) scale(1.1) !important;
+}
+
+.modal::after,
+.modal.hellfire::after {
+display: none !important;
+}
+
+/* СИНЕЕ свечение для карточки 11-го дня (как у остальных) */
+.island.hellfire {
+background: rgba(15, 28, 63, 0.35) !important;
+box-shadow: 0 0 30px rgba(31, 58, 114, 0.2) !important;
+border-color: rgba(31, 58, 114, 0.4) !important;
+}
+.island.hellfire .day {
+color: rgba(58, 95, 174, 0.8) !important;
+text-shadow: 0 0 12px rgba(58, 95, 174, 0.4) !important;
+}
+.island.hellfire::after {
+border-color: rgba(58, 95, 174, 0.5) !important;
+box-shadow: 0 0 8px rgba(58, 95, 174, 0.3) !important;
+}
+.island.hellfire .preview {
+opacity: 0.13 !important;
+filter: saturate(0.75) hue-rotate(6deg) brightness(0.9) !important;
+}
