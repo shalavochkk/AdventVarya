@@ -1,3 +1,5 @@
+// ===== AUDIO.JS — плееры для музыки на днях 4, 8, 9, 11 =====
+
 const audioPlayers = {};
 
 function initAudio() {

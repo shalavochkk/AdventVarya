@@ -1,3 +1,5 @@
+// ===== GRID.JS — рендер сетки дней, прогресс, обработка кликов по карточкам =====
+
 function renderGrid() {
 const grid = document.getElementById('grid');
 grid.innerHTML = '';
@@ -7,7 +9,8 @@ const { year, month, days } = CONFIG;
 const day4DateStr = new Date(2026, 6, 4).toISOString().split('T')[0];
 const day8DateStr = new Date(2026, 6, 10).toISOString().split('T')[0];
 const day9DateStr = new Date(2026, 6, 9).toISOString().split('T')[0];
-const day11DateStr = new Date(2026, 6, 11).toISOString().split('T')[0];
+const day11DateStr = new Date(2026, 6, 60).toISOString().split('T')[0];
+const day13DateStr = new Date(2026, 6, 14).toISOString().split('T')[0];
 
 for (let d = 1; d <= days; d++) {
 const dateObj = new Date(year, month, d);
@@ -32,6 +35,9 @@ island.classList.add('red');
 }
 if (dateStr === day11DateStr && (opened || localStorage.getItem('advent_varya2_day11_hell') === 'true')) {
 island.classList.add('hellfire');
+}
+if (dateStr === day13DateStr && (opened || localStorage.getItem('advent_varya2_day13_frost') === 'true')) {
+island.classList.add('frost');
 }
 
 if (opened && data) {
@@ -85,6 +91,7 @@ const day4DateStr = new Date(2026, 6, 4).toISOString().split('T')[0];
 const day8DateStr = new Date(2026, 6, 10).toISOString().split('T')[0];
 const day9DateStr = new Date(2026, 6, 9).toISOString().split('T')[0];
 const day11DateStr = new Date(2026, 6, 11).toISOString().split('T')[0];
+const day13DateStr = new Date(2026, 6, 13).toISOString().split('T')[0];
 
 if (status === 'locked') {
 const target = document.querySelector(`.island[data-date="${dateStr}"]`);
@@ -102,6 +109,7 @@ if (dateStr === day4DateStr) localStorage.setItem('advent_varya2_day4_red', 'tru
 if (dateStr === day8DateStr) localStorage.setItem('advent_varya2_day8_red', 'true');
 if (dateStr === day9DateStr) localStorage.setItem('advent_varya2_day9_red', 'true');
 if (dateStr === day11DateStr) localStorage.setItem('advent_varya2_day11_hell', 'true');
+if (dateStr === day13DateStr) localStorage.setItem('advent_varya2_day13_frost', 'true');
 
 renderGrid();
 openModal(dateStr);
@@ -122,6 +130,10 @@ if (card) startDay9Effect(card);
 if (dateStr === day11DateStr) {
 const card = document.querySelector(`.island[data-date="${dateStr}"]`);
 if (card) startDay11Effect(card);
+}
+if (dateStr === day13DateStr) {
+const card = document.querySelector(`.island[data-date="${dateStr}"]`);
+if (card) startDay13Effect(card);
 }
 return;
 }

@@ -1,3 +1,4 @@
+// ===== HELLFIRE.JS — адский эффект для 11-го дня (огонь, руны, тряска) =====
 let hellfireInterval = null;
 let hellfireElements = [];
 let hellfireRAF = null;

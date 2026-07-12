@@ -1,3 +1,4 @@
+// ===== GLITCH.JS — чёрно-белый глитч-эффект для 9-го дня, синхронизированный по BPM =====
 let glitchInterval = null;
 let glitchElements = [];
 

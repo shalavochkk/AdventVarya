@@ -1,3 +1,6 @@
+// ===== MAIN.JS — точка входа: инициализация после загрузки страницы =====
+
+// Инициализация
 document.addEventListener('DOMContentLoaded', () => {
 initAudio();
 renderGrid();

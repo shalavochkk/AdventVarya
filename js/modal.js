@@ -1,3 +1,5 @@
+// ===== MODAL.JS — модалка с текстом/картинкой дня: открытие, закрытие, слушатели =====
+
 const overlay = document.getElementById('modalOverlay');
 const modalImage = document.getElementById('modalImage');
 const modalKicker = document.getElementById('modalKicker');
@@ -40,6 +42,10 @@ stopGlitchEffect();
 if (day === 11) {
 startHellfireEffect();
 }
+
+if (day === 13) {
+startFrostEffect();
+}
 }
 
 function closeModal() {
@@ -49,6 +55,7 @@ document.body.style.overflow = '';
 stopAllAudio();
 stopGlitchEffect();
 stopHellfireEffect();
+stopFrostEffect();
 }
 
 modalClose.addEventListener('click', closeModal);

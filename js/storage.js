@@ -1,3 +1,5 @@
+// ===== STORAGE.JS — работа с localStorage: какие дни открыты, какой статус у ячейки =====
+
 function getToday() {
 return new Date();
 }
